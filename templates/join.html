@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<title>Document</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-<form method="get" action="/quiz">
-  <input name="group" maxlength="1" placeholder="A-Z" required>
-  <br>
+<body style="text-align:center; font-family:sans-serif">
+
+<h1>クイズ参加</h1>
+
+<form method="post">
+  <input name="group" maxlength="1" placeholder="グループ(A-Z)" required>
+  <br><br>
   <input name="player" type="number" min="1" max="4" placeholder="番号(1-4)" required>
-  <br>
+  <br><br>
   <button>参加</button>
 </form>
-
 
 </body>
 </html>

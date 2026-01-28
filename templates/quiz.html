@@ -1,37 +1,95 @@
-<h1>グループ {{ group }} / 番号 {{ player }}</h1>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<style>
+body { font-family: sans-serif; text-align: center; }
+#modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+.werewolf { color: red; font-size: 1.5em; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<h1>グループ {{ group }} / 番号 {{ player }}</h1>
 <div id="main">待機中…</div>
+
+<div id="modal">
+  <div id="modal-content">
+    <p class="werewolf">あなたは人狼です</p>
+    <p>正解が表示されます</p>
+    <button onclick="closeModal()">OK</button>
+  </div>
+</div>
 
 <script>
 const group = "{{ group }}";
 const player = "{{ player }}";
 let answered = false;
+let roleChecked = false;
+
+let lastStatus = null;
+let lastAnswered = null;
+
 
 setInterval(async () => {
   const res = await fetch(`/api/state?group=${group}&player=${player}`);
   const data = await res.json();
+  if (
+  data.status === lastStatus
+) {
+  return;
+}
 
-  // クイズ中
-  if (data.status === "answering" && !answered) {
+lastStatus = data.status;
+lastAnswered = data.answered;
+  if (!roleChecked && data.is_werewolf) {
+    document.getElementById("modal").style.display = "flex";
+    roleChecked = true;
+  }
+
+  if (data.status === "answering") {
+
+    if (data.answered) {
+      document.getElementById("main").innerHTML =
+        "<p>このグループはすでに回答しました</p>";
+      return;
+    }
+
     let html = `<p>${data.question}</p>`;
 
     if (data.is_werewolf) {
-      html += `<p style="color:red">
-        あなたは人狼です<br>
-        正解：${data.correct}
-      </p>`;
+      html += `<p id="secret"
+   style="color:red; font-weight:bold; cursor:pointer"
+   onclick="this.remove()">
+  正解：${data.correct}<br>
+  （タップで消えます）
+</p>
+`;
     }
 
     html += `
       <input id="ans" type="number" step="any">
-      <br>
+      <br><br>
       <button onclick="send()">送信</button>
     `;
-
     document.getElementById("main").innerHTML = html;
   }
 
-  // 正解発表
   if (data.status === "result") {
     document.getElementById("main").innerHTML = `
       <p>正解：${data.correct}</p>
@@ -41,20 +99,46 @@ setInterval(async () => {
     answered = false;
   }
 
+  if (data.status === "ranking") {
+  let html = "<h3>順位</h3><ol>";
+
+  for (const r of data.ranking) {
+    html += `<li>${r.group}：${r.score}</li>`;
+  }
+
+  html += "</ol>";
+  main.innerHTML = html;
+}
+
 }, 3000);
 
-async function send() {
-  const v = document.getElementById("ans").value;
-  if (v === "") return;
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
 
-  await fetch("/api/answer", {
+async function send() {
+  const v = ans.value;
+
+  const res = await fetch("/api/answer", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ group, answer: v })
+    body: JSON.stringify({
+      group,
+      answer: v
+    })
   });
 
-  answered = true;
-  document.getElementById("main").innerHTML =
-    "<p>回答を送信しました</p>";
+  if (!res.ok) {
+    main.innerHTML = "すでに誰かが回答しています";
+    lastAnswered = true;   // ★追加
+    return;
+  }
+
+  main.innerHTML = "回答を送信しました";
+  lastAnswered = true;     // ★追加
 }
+
 </script>
+
+</body>
+</html>

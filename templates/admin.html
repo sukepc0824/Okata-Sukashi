@@ -1,35 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+<meta charset="UTF-8">
+<title>運営</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-  <h1>運営画面</h1>
+<body style="font-family:sans-serif">
+
+<h1>運営画面</h1>
+
+<div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+  <h2>現在の問題</h2>
+  {% if quiz %}
+    <p>状態：{{ status }}</p>
+    <p>問題：{{ quiz.question }}</p>
+    <p>正解：{{ quiz.correct }}</p>
+  {% else %}
+    <p>未開始</p>
+  {% endif %}
+</div>
 
 <button onclick="nextQuiz()">次のクイズ</button>
-<button onclick="showResult()">正解発表</button>
+<button onclick="result()">正解発表</button>
+<button onclick="showRanking()">順位表示</button>
 
-<h2>現在の状況</h2>
+
+<h2>グループ状況</h2>
 <ul>
 {% for g, d in groups.items() %}
   <li>
-    {{ g }} :
-    回答 {{ d.answer }},
-    スコア {{ d.score }},
-    累積 {{ "%.3f"|format(d.total_score) }}
+    {{ g }} |
+    回答: {{ d.answer }} |
+    スコア: {{ d.score }} |
+    累積: {{ "%.3f"|format(d.total_score) }}
   </li>
 {% endfor %}
 </ul>
 
 <script>
 function nextQuiz() {
-  fetch("/admin/next", {method:"POST"});
+  fetch("/admin/next", {method:"POST"})
+    .then(() => location.reload());
 }
-function showResult() {
-  fetch("/admin/result", {method:"POST"});
+function result() {
+  fetch("/admin/result", {method:"POST"})
+    .then(() => location.reload());
 }
+
+ function showRanking() {
+  fetch("/admin/ranking", { method: "POST" })
+    .then(() => location.reload());
+}
+
 </script>
 
 </body>
