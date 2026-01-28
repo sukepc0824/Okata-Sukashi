@@ -1,0 +1,60 @@
+<h1>グループ {{ group }} / 番号 {{ player }}</h1>
+
+<div id="main">待機中…</div>
+
+<script>
+const group = "{{ group }}";
+const player = "{{ player }}";
+let answered = false;
+
+setInterval(async () => {
+  const res = await fetch(`/api/state?group=${group}&player=${player}`);
+  const data = await res.json();
+
+  // クイズ中
+  if (data.status === "answering" && !answered) {
+    let html = `<p>${data.question}</p>`;
+
+    if (data.is_werewolf) {
+      html += `<p style="color:red">
+        あなたは人狼です<br>
+        正解：${data.correct}
+      </p>`;
+    }
+
+    html += `
+      <input id="ans" type="number" step="any">
+      <br>
+      <button onclick="send()">送信</button>
+    `;
+
+    document.getElementById("main").innerHTML = html;
+  }
+
+  // 正解発表
+  if (data.status === "result") {
+    document.getElementById("main").innerHTML = `
+      <p>正解：${data.correct}</p>
+      <p>今回スコア：${data.score}</p>
+      <p>累積スコア：${data.total_score}</p>
+    `;
+    answered = false;
+  }
+
+}, 3000);
+
+async function send() {
+  const v = document.getElementById("ans").value;
+  if (v === "") return;
+
+  await fetch("/api/answer", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ group, answer: v })
+  });
+
+  answered = true;
+  document.getElementById("main").innerHTML =
+    "<p>回答を送信しました</p>";
+}
+</script>

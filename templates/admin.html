@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>運営画面</h1>
+
+<button onclick="nextQuiz()">次のクイズ</button>
+<button onclick="showResult()">正解発表</button>
+
+<h2>現在の状況</h2>
+<ul>
+{% for g, d in groups.items() %}
+  <li>
+    {{ g }} :
+    回答 {{ d.answer }},
+    スコア {{ d.score }},
+    累積 {{ "%.3f"|format(d.total_score) }}
+  </li>
+{% endfor %}
+</ul>
+
+<script>
+function nextQuiz() {
+  fetch("/admin/next", {method:"POST"});
+}
+function showResult() {
+  fetch("/admin/result", {method:"POST"});
+}
+</script>
+
+</body>
+</html>
