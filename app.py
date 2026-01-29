@@ -230,11 +230,21 @@ def next_quiz():
 def result():
     idx = game_state["current_index"]
     correct = quizzes[idx]["correct"]
-
-    for g in groups.values():
+    scores_with_groups = []
+    for group_name, g in groups.items():
         if g["answer"] is not None:
-            g["score"] = abs(g["answer"] - correct)
-            g["total_score"] += g["score"]
+            abs_diff = abs(g["answer"] - correct)
+            scores_with_groups.append((group_name, g, abs_diff))
+
+    scores_with_groups.sort(key=lambda x: x[2])
+    for rank, (group_name, g, abs_diff) in enumerate(scores_with_groups):
+        points = (len(scores_with_groups) - rank)*100
+        g["score"] = points
+        g["total_score"] += points
+
+    for group_name, g in groups.items():
+        if g["answer"] is None:
+            g["score"] = 0
 
     game_state["status"] = "result"
     return jsonify({"ok": True})
@@ -250,10 +260,6 @@ def admin_reset():
     reset_all()
     return jsonify({"ok": True})
 
-
-
-
 # ===== 起動 =====
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
