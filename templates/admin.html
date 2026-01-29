@@ -23,6 +23,7 @@
 <button onclick="nextQuiz()">次のクイズ</button>
 <button onclick="result()">正解発表</button>
 <button onclick="showRanking()">順位表示</button>
+<button onclick="resetAll()" style="color:#c00">リセット</button>
 
 
 <h2>グループ状況</h2>
@@ -49,6 +50,12 @@ function result() {
 
  function showRanking() {
   fetch("/admin/ranking", { method: "POST" })
+    .then(() => location.reload());
+}
+
+function resetAll() {
+  if (!confirm("全てを初期状態にリセットします。よろしいですか？")) return;
+  fetch("/admin/reset", { method: "POST" })
     .then(() => location.reload());
 }
 

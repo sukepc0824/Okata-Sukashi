@@ -47,6 +47,48 @@ game_state = {
     "current_index": -1
 }
 
+# 初期化用関数
+def reset_all():
+    global groups, quizzes, game_state
+    groups = {
+        "A": {
+            "members": 4,
+            "werewolf": random.randint(1, 4),
+            "reward": 0,
+            "answered": False,
+            "answer": None,
+            "score": None,
+            "total_score": 0
+        },
+        "B": {
+            "members": 4,
+            "werewolf": random.randint(1, 4),
+            "reward": 0,
+            "answered": False,
+            "answer": None,
+            "score": None,
+            "total_score": 0
+        }
+    }
+    quizzes = [
+        {
+            "question": "木崎の身長",
+            "correct": 170
+        },
+        {
+            "question": "木崎の体重",
+            "correct": 48
+        },
+        {
+            "question": "木崎の部屋番号",
+            "correct": 404
+        }
+    ]
+    game_state = {
+        "status": "waiting",
+        "current_index": -1
+    }
+
 # ===== 参加 =====
 
 @app.route("/", methods=["GET", "POST"])
@@ -199,6 +241,12 @@ def result():
 @app.route("/admin/ranking", methods=["POST"])
 def ranking():
     game_state["status"] = "ranking"
+    return jsonify({"ok": True})
+
+
+@app.route("/admin/reset", methods=["POST"])
+def admin_reset():
+    reset_all()
     return jsonify({"ok": True})
 
 
