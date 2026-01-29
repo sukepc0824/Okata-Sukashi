@@ -2,63 +2,322 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>運営</title>
+<title>運営画面 - おおかたすかし</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f3f4f6;
+  padding: 24px;
+  color: #1f2937;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #1f2937;
+  margin-bottom: 32px;
+  text-align: center;
+  font-size: 2.2em;
+  font-weight: 700;
+}
+
+h2 {
+  color: #1f2937;
+  margin-top: 28px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 12px;
+  font-weight: 600;
+  font-size: 1.3em;
+}
+
+.status-box {
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.status-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.info-item {
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.85em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 1.2em;
+  color: #1f2937;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  flex: 1;
+  min-width: 140px;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+  flex: 0;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+}
+
+table thead {
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+}
+
+table tbody tr:hover {
+  background: #f9fafb;
+}
+
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+.badge-waiting {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-answering {
+  background: #bfdbfe;
+  color: #1e40af;
+}
+
+.badge-result {
+  background: #bbf7d0;
+  color: #065f46;
+}
+
+.badge-ranking {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.empty-state {
+  text-align: center;
+  color: #9ca3af;
+  padding: 32px 20px;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .status-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  button {
+    min-width: auto;
+  }
+}
+</style>
 </head>
-<body style="font-family:sans-serif">
+<body>
+<div class="container">
+  <h1>🎮 運営画面</h1>
+  
+  <div class="status-box">
+    <h2>現在の状態</h2>
+    <div class="status-info">
+      {% if quiz %}
+        <div class="info-item">
+          <div class="info-label">ステータス</div>
+          <div class="info-value"><span class="status-badge badge-{{ status }}">{{ status }}</span></div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">問題</div>
+          <div class="info-value">{{ quiz.question }}</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">正解</div>
+          <div class="info-value">{{ quiz.correct }}</div>
+        </div>
+      {% else %}
+        <div class="info-item">
+          <div class="info-label">ステータス</div>
+          <div class="info-value"><span class="status-badge badge-waiting">未開始</span></div>
+        </div>
+        <div class="empty-state" style="grid-column: 1/-1; padding: 20px;">クイズを開始してください</div>
+      {% endif %}
+    </div>
+    
+    <div class="button-group">
+      <button class="btn-primary" onclick="nextQuiz()">▶️ 次のクイズ</button>
+      <button class="btn-primary" onclick="result()">✅ 正解発表</button>
+      <button class="btn-primary" onclick="showRanking()">🏆 順位表示</button>
+      <button class="btn-danger" onclick="resetAll()">🔄 リセット</button>
+    </div>
+  </div>
 
-<h1>運営画面</h1>
-
-<div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
-  <h2>現在の問題</h2>
-  {% if quiz %}
-    <p>状態：{{ status }}</p>
-    <p>問題：{{ quiz.question }}</p>
-    <p>正解：{{ quiz.correct }}</p>
-  {% else %}
-    <p>未開始</p>
-  {% endif %}
+  <div class="table-wrapper">
+    <h2>グループ状況</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>グループ</th>
+          <th>回答</th>
+          <th>今回スコア</th>
+          <th>累積スコア</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for g, d in groups.items() %}
+          <tr>
+            <td><strong>{{ g }}</strong></td>
+            <td>{% if d.answer is not none %}{{ d.answer }}{% else %}<em style="color:#d1d5db;">未回答</em>{% endif %}</td>
+            <td>{% if d.score is not none %}{{ d.score }}{% else %}<em style="color:#d1d5db;">-</em>{% endif %}</td>
+            <td><strong style="color:#3b82f6;">{{ d.total_score }}</strong></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
-
-<button onclick="nextQuiz()">次のクイズ</button>
-<button onclick="result()">正解発表</button>
-<button onclick="showRanking()">順位表示</button>
-<button onclick="resetAll()" style="color:#c00">リセット</button>
-
-
-<h2>グループ状況</h2>
-<ul>
-{% for g, d in groups.items() %}
-  <li>
-    {{ g }} |
-    回答: {{ d.answer }} |
-    スコア: {{ d.score }} |
-    累積: {{ "%.3f"|format(d.total_score) }}
-  </li>
-{% endfor %}
-</ul>
 
 <script>
 function nextQuiz() {
   fetch("/admin/next", {method:"POST"})
-    .then(() => location.reload());
-}
-function result() {
-  fetch("/admin/result", {method:"POST"})
-    .then(() => location.reload());
+    .then(res => {
+      if (!res.ok) alert("エラー: クイズがありません");
+      location.reload();
+    })
+    .catch(() => alert("通信エラー"));
 }
 
- function showRanking() {
+function result() {
+  fetch("/admin/result", {method:"POST"})
+    .then(res => {
+      if (!res.ok) alert("エラー");
+      location.reload();
+    })
+    .catch(() => alert("通信エラー"));
+}
+
+function showRanking() {
   fetch("/admin/ranking", { method: "POST" })
-    .then(() => location.reload());
+    .then(res => {
+      if (!res.ok) alert("エラー");
+      location.reload();
+    })
+    .catch(() => alert("通信エラー"));
 }
 
 function resetAll() {
-  if (!confirm("全てを初期状態にリセットします。よろしいですか？")) return;
+  if (!confirm("⚠️ 全てを初期状態にリセットします。\nよろしいですか？")) return;
   fetch("/admin/reset", { method: "POST" })
-    .then(() => location.reload());
+    .then(res => {
+      if (!res.ok) alert("エラー");
+      location.reload();
+    })
+    .catch(() => alert("通信エラー"));
 }
-
 </script>
 
 </body>
