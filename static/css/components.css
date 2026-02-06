@@ -1,0 +1,160 @@
+@import 'variables.css';
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: var(--font-weight-extrabold);
+    transition: all 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-inverse);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+    min-width: 120px;
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: none !important;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+}
+
+.btn-primary {
+    background: var(--color-info);
+    box-shadow: 0 4px 0 var(--color-info-shadow);
+}
+
+.btn-primary:active {
+    box-shadow: 0 0 0 var(--color-info-shadow) !important;
+}
+
+.btn-success {
+    background: var(--color-success);
+    box-shadow: 0 4px 0 var(--color-success-shadow);
+}
+
+.btn-success:active {
+    box-shadow: 0 0 0 var(--color-success-shadow) !important;
+}
+
+.btn-danger {
+    background: var(--color-danger);
+    box-shadow: 0 4px 0 var(--color-danger-shadow);
+}
+
+.btn-danger:active {
+    box-shadow: 0 0 0 var(--color-danger-shadow) !important;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Card */
+.card {
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-card);
+    border: 2px solid var(--color-border);
+}
+
+/* Inputs */
+.input {
+    padding: 14px 16px;
+    font-size: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: all 0.1s;
+    background: var(--color-bg-input);
+    color: var(--color-text-main);
+    font-family: inherit;
+    font-weight: var(--font-weight-bold);
+    width: 100%;
+}
+
+.input:focus {
+    outline: none;
+    background: var(--color-bg-card);
+    border-color: var(--color-border-input-focus);
+}
+
+.input::placeholder {
+    color: var(--color-text-sub);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--radius-xs);
+    font-weight: var(--font-weight-extrabold);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-waiting {
+    background: #fff5f5;
+    color: var(--color-danger);
+}
+
+.badge-answering {
+    background: #ecf9ff;
+    color: var(--color-info);
+}
+
+.badge-result {
+    background: #dfffc8;
+    color: var(--color-success);
+}
+
+.badge-ranking {
+    background: #e5e5e5;
+    color: var(--color-text-main);
+}
+
+/* Tables */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table th {
+    padding: var(--spacing-sm);
+    text-align: left;
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-sub);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--color-border);
+    background: #f7f7f7;
+}
+
+.table td {
+    padding: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border);
+    color: var(--color-text-main);
+    font-weight: var(--font-weight-bold);
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}

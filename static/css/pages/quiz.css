@@ -1,0 +1,219 @@
+@import '../variables.css';
+
+/* Top Bar */
+.top-bar {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-text-main);
+    padding: 16px 20px;
+    text-align: center;
+    font-weight: var(--font-weight-extrabold);
+    font-size: 1.1em;
+    border-bottom: 2px solid var(--color-border);
+}
+
+.top-bar strong {
+    color: var(--color-info);
+}
+
+.main-container {
+    padding: 10px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Main Content */
+#main {
+    padding: 40px;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-md);
+    border: 2px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Question Text */
+.question-text {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #1f2937;
+    /* Tailwind Gray 800 equivalent */
+}
+
+/* Waiting Text */
+.waiting {
+    font-size: 1.5em;
+    color: var(--color-text-sub);
+    font-weight: var(--font-weight-extrabold);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* Secret (Werewolf) */
+#secret {
+    color: var(--color-danger);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    font-size: 1.4em;
+    padding: 20px;
+    background: #fff5f5;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin: 20px 0;
+    user-select: none;
+    border: 2px solid var(--color-danger);
+    box-shadow: 0 4px 0 var(--color-danger-shadow);
+    transition: all 0.1s;
+}
+
+#secret:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--color-danger-shadow);
+}
+
+/* Modal */
+#modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+#modal-content {
+    background: var(--color-bg-card);
+    padding: 40px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    border: 2px solid var(--color-border);
+    width: 90%;
+}
+
+.werewolf-title {
+    color: var(--color-danger);
+    font-size: 2.5em;
+    font-weight: var(--font-weight-black);
+    margin: 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Tables */
+.result-table,
+.ranking-table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.result-table td,
+.ranking-table td,
+.ranking-table th {
+    padding: 16px;
+    border-bottom: 2px solid var(--color-border);
+    font-weight: var(--font-weight-bold);
+}
+
+.result-table td:first-child {
+    background: #f7f7f7;
+    color: var(--color-info);
+    text-align: right;
+    width: 40%;
+}
+
+.result-table td:last-child {
+    font-size: 1.2em;
+    color: var(--color-text-main);
+}
+
+.ranking-table thead {
+    background: #f7f7f7;
+}
+
+.ranking-table th {
+    color: var(--color-text-sub);
+}
+
+.rank-1 {
+    background: #fff8e1;
+}
+
+.rank-1 td {
+    color: #dfa600;
+}
+
+.rank-2 {
+    background: #ecf9ff;
+}
+
+.rank-2 td {
+    color: var(--color-info);
+}
+
+.rank-3 {
+    background: #fff5f5;
+}
+
+.rank-3 td {
+    color: var(--color-danger);
+}
+
+/* Bottom Action Bar */
+.bottom-action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--color-bg-card);
+    padding: 16px;
+    border-top: 2px solid var(--color-border);
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+}
+
+.bottom-action-bar .input {
+    flex: 1;
+    margin-bottom: 0;
+    /* Override default input margin if any */
+}
+
+.bottom-action-bar .btn {
+    flex: 0 0 100px;
+    /* Fixed width button */
+    font-size: 1.1em;
+}
+
+/* Add padding to main to prevent content hiding behind footer */
+#main {
+    margin-bottom: 100px;
+}
+
+.ranking-container {
+    width: 100%;
+}

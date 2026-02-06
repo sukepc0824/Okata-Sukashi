@@ -1,0 +1,46 @@
+/* Admin Ranking Styles */
+.rank-badge {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--color-border);
+    color: var(--color-text-sub);
+    font-size: 0.8em;
+    margin-right: 8px;
+    font-weight: var(--font-weight-bold);
+}
+
+.rank-1 .rank-badge {
+    background: #FFD700;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.rank-1 {
+    background: #fff8e1;
+    /* Light Gold */
+    border-left: 4px solid #FFD700;
+}
+
+.rank-2 .rank-badge {
+    background: #C0C0C0;
+    color: #fff;
+}
+
+.rank-2 {
+    background: #f7f7f7;
+    border-left: 4px solid #C0C0C0;
+}
+
+.rank-bottom {
+    background: #fff5f5;
+    border-left: 4px solid var(--color-danger);
+}
+
+.rank-bottom-2 {
+    background: #fff0f0;
+    border-left: 4px solid #ffcccc;
+}

@@ -1,0 +1,39 @@
+@import '../variables.css';
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.container-join {
+    background: var(--color-bg-card);
+    padding: 40px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    border: 2px solid var(--color-border);
+}
+
+h1 {
+    color: var(--color-text-main);
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: 0.5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.btn-submit {
+    margin-top: 10px;
+}

@@ -1,0 +1,54 @@
+:root {
+  /* Colors - Duolingo Palette (Inspired) */
+  /* Main Action (Blue) becomes Success */
+  --color-success: #1CB0F6;
+  --color-success-hover: #1693ce;
+  --color-success-shadow: #1899D6;
+
+  /* Secondary (Green) becomes Info */
+  --color-info: #58CC02;
+  --color-info-hover: #46a302;
+  --color-info-shadow: #58a700;
+
+  --color-danger: #FF4B4B;
+  --color-danger-hover: #d43232;
+  --color-danger-shadow: #EA2B2B;
+
+  --color-warning: #FFC800;
+  --color-warning-hover: #dcb300;
+  --color-warning-shadow: #E5B200;
+
+  --color-text-main: #4b4b4b;
+  --color-text-sub: #afafaf;
+  --color-text-light: #ffffff;
+  --color-text-inverse: #ffffff;
+
+  --color-bg-body: #f6f6f6;
+  --color-bg-card: #ffffff;
+  --color-bg-input: #f7f7f7;
+
+  --color-border: #e5e5e5;
+  --color-border-input-focus: #1CB0F6;
+
+  /* Typography */
+  --font-main: 'Nunito', 'M PLUS Rounded 1c', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* Spacing & Layout */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 20px;
+  --spacing-lg: 32px;
+  --spacing-xl: 40px;
+
+  --radius-xs: 12px;
+  --radius-sm: 16px;
+  --radius-md: 20px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 0 #e5e5e5;
+  --shadow-btn: 0 4px 0 rgba(0, 0, 0, 0.2);
+}
