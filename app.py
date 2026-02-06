@@ -291,4 +291,4 @@ def admin_reset():
 
 if __name__ == "__main__":
     reset_all()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
