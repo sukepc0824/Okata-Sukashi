@@ -116,14 +116,14 @@
 
     function resetAll() {
       const numGroups = document.getElementById("confNumGroups").value;
-      const threePerson = document.getElementById("confThreePerson").value;
+      const fourPerson = document.getElementById("confFourPerson").value;
 
       fetch("/admin/reset", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           num_groups: numGroups,
-          three_person: threePerson
+          four_person: fourPerson
         })
       })
         .then(res => {
@@ -143,8 +143,8 @@
         <input type="number" id="confNumGroups" class="input" value="5" min="1" max="26">
       </div>
       <div class="form-group">
-        <label>3人グループ (カンマ区切り, 例: 3, 5)</label>
-        <input type="text" id="confThreePerson" class="input" placeholder="例: 3, 5">
+        <label>4人グループ (カンマ区切り, 例: 3, 5)</label>
+        <input type="text" id="confFourPerson" class="input" placeholder="例: 3, 5">
       </div>
       <div class="modal-actions">
         <button class="btn btn-danger" onclick="resetAll()">リセット実行</button>

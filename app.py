@@ -27,20 +27,20 @@ groups = {}
 quizzes = []
 game_state = {}
 
-def reset_all(num_groups=5, three_person_groups=None):
+def reset_all(num_groups=5, four_person_groups=None):
     global groups, quizzes, game_state
     
-    if three_person_groups is None:
-        three_person_groups = []
+    if four_person_groups is None:
+        four_person_groups = []
         
     new_groups = {}
     
     for i in range(num_groups):
         group_id = str(i + 1)
         
-        is_three_person = group_id in three_person_groups
-        members = 3 if is_three_person else 4
-        werewolf_range = 3 if is_three_person else 4
+        is_four_person = group_id in four_person_groups
+        members = 4 if is_four_person else 3
+        werewolf_range = 4 if is_four_person else 3
         
         new_groups[group_id] = {
             "name": group_id,
@@ -90,8 +90,8 @@ def join():
         if group not in groups:
             groups[group] = {
                 "name": group_name_input if group_name_input else group,
-                "members": 4,
-                "werewolf": random.randint(1, 4),
+                "members": 3,
+                "werewolf": random.randint(1, 3),
                 "answered": False,
                 "answer": None,
                 "score": None,
@@ -271,7 +271,7 @@ def result():
 def admin_reset():
     data = request.json
     num_groups = 5
-    three_person = []
+    four_person = []
     
     if data:
         if "num_groups" in data:
@@ -279,14 +279,14 @@ def admin_reset():
                 num_groups = int(data["num_groups"])
             except:
                 pass
-        if "three_person" in data:
-             tp = data["three_person"]
-             if isinstance(tp, str):
-                 three_person = [x.strip() for x in tp.split(",") if x.strip()]
-             elif isinstance(tp, list):
-                 three_person = tp
+        if "four_person" in data:
+             fp = data["four_person"]
+             if isinstance(fp, str):
+                 four_person = [x.strip() for x in fp.split(",") if x.strip()]
+             elif isinstance(fp, list):
+                 four_person = fp
                  
-    reset_all(num_groups=num_groups, three_person_groups=three_person)
+    reset_all(num_groups=num_groups, four_person_groups=four_person)
     return jsonify({"ok": True})
 
 if __name__ == "__main__":
