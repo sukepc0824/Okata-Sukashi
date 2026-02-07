@@ -57,16 +57,40 @@ def reset_all(num_groups=5, four_person_groups=None):
     
     quizzes = [
         {
-            "question": "木崎の身長",
-            "correct": 170
+            "question": "私は身長何cm？声から当ててみよ",
+            "correct": 160
         },
         {
-            "question": "木崎の体重",
-            "correct": 48
+            "question": "H2Oの接合角、何度?",
+            "correct": 104.5
         },
         {
-            "question": "木崎の部屋番号",
-            "correct": 404
+            "question": "日本にある活火山の個数は？",
+            "correct": 111
+        },
+        {
+            "question": "犬の染色体の本数は？",
+            "correct": 78
+        },
+        {
+            "question": "日本で二番目に高い山の標高は？",
+            "correct": 3193
+        },
+        {
+            "question": "この赤色の波長は何nm？",
+            "correct": 610
+        },
+        {
+            "question": "2025年度に日本に起こった 震度4以上の地震の回数は？",
+            "correct": 112
+        },
+        {
+            "question": "最新コンピュータは英数字記号7桁のパスワードの突破に何日かかる？",
+            "correct": 302
+        },
+        {
+            "question": "ビャンビャンメン 何画?",
+            "correct": 130
         }
     ]
     game_state = {
