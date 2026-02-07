@@ -43,6 +43,34 @@
     let lastStatus = null;
     let lastAnswered = null;
 
+    function getFilteredRanking(rankingData) {
+      if (!rankingData) return [];
+
+      // Assign rank to each item
+      const rankingWithRank = rankingData.map((item, index) => {
+        return { ...item, rank: index + 1 };
+      });
+
+      if (rankingWithRank.length <= 5) return rankingWithRank;
+
+      const myIndex = rankingWithRank.findIndex(r => r.id === group);
+      const count = rankingWithRank.length;
+
+      const indicesToShow = new Set();
+      // Top 2
+      indicesToShow.add(0);
+      if (count > 1) indicesToShow.add(1);
+
+      // Bottom 2
+      indicesToShow.add(count - 1);
+      if (count > 1) indicesToShow.add(count - 2);
+
+      // Self
+      if (myIndex !== -1) indicesToShow.add(myIndex);
+
+      const sortedIndices = Array.from(indicesToShow).sort((a, b) => a - b);
+      return sortedIndices.map(i => rankingWithRank[i]);
+    }
 
     setInterval(async () => {
       const res = await fetch(`/api/state?group=${group}&player=${player}`);
@@ -107,18 +135,21 @@
           html += "<h2>順位表</h2>";
           html += "<div class='ranking-container'><table class='ranking-table'><thead><tr><th>順位</th><th>グループ</th><th>累積スコア</th></tr></thead><tbody>";
 
-          for (let i = 0; i < data.ranking.length; i++) {
-            const r = data.ranking[i];
+          const filteredRanking = getFilteredRanking(data.ranking);
+          const totalCount = data.ranking.length;
+
+          for (let i = 0; i < filteredRanking.length; i++) {
+            const r = filteredRanking[i];
             let rankClass = '';
-            const count = data.ranking.length;
-            if (i === 0) rankClass = 'rank-1';
-            else if (i === 1) rankClass = 'rank-2';
-            else if (i === count - 1) rankClass = 'rank-bottom';
-            else if (i === count - 2) rankClass = 'rank-bottom-2';
+
+            if (r.rank === 1) rankClass = 'rank-1';
+            else if (r.rank === 2) rankClass = 'rank-2';
+            else if (r.rank === totalCount) rankClass = 'rank-bottom';
+            else if (r.rank === totalCount - 1) rankClass = 'rank-bottom-2';
 
             html += `<tr class="${rankClass}">
               <td>
-                <span class="rank-badge">${i + 1}</span>
+                <span class="rank-badge">${r.rank}</span>
               </td>
               <td><strong>${r.group}</strong></td>
               <td>${r.score}</td>
@@ -135,14 +166,19 @@
         let html = "<h2>順位表</h2>";
         html += "<table class='ranking-table'><thead><tr><th>順位</th><th>グループ</th><th>累積スコア</th></tr></thead><tbody>";
 
-        for (let i = 0; i < data.ranking.length; i++) {
-          const r = data.ranking[i];
-          let rankClass = '';
-          if (i === 0) rankClass = 'rank-1';
-          else if (i === 1) rankClass = 'rank-2';
-          else if (i === 2) rankClass = 'rank-3';
+        const filteredRanking = getFilteredRanking(data.ranking);
+        const totalCount = data.ranking.length;
 
-          html += `<tr class="${rankClass}"><td>${i + 1}位</td><td><strong>${r.group}</strong></td><td>${r.score}</td></tr>`;
+        for (let i = 0; i < filteredRanking.length; i++) {
+          const r = filteredRanking[i];
+          let rankClass = '';
+
+          if (r.rank === 1) rankClass = 'rank-1';
+          else if (r.rank === 2) rankClass = 'rank-2';
+          else if (r.rank === totalCount) rankClass = 'rank-bottom';
+          else if (r.rank === totalCount - 1) rankClass = 'rank-bottom-2';
+
+          html += `<tr class="${rankClass}"><td>${r.rank}位</td><td><strong>${r.group}</strong></td><td>${r.score}</td></tr>`;
         }
 
         html += "</tbody></table>";

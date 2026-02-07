@@ -180,7 +180,7 @@ def state():
             reverse=True
         )
         ranking_data = [
-            {"group": v["name"], "score": v["total_score"]}
+            {"id": g, "group": v["name"], "score": v["total_score"]}
             for g, v in ranking_list
         ]
         
@@ -194,13 +194,14 @@ def state():
     if game_state["status"] == "ranking":
         ranking = sorted(
         groups.items(),
-        key=lambda x: x[1]["total_score"]
+        key=lambda x: x[1]["total_score"],
+        reverse=True
         )
 
         return jsonify({
             "status": "ranking",
             "ranking": [
-                {"group": v["name"], "score": v["total_score"]}
+                {"id": g, "group": v["name"], "score": v["total_score"]}
                 for g, v in ranking
             ]
         })
