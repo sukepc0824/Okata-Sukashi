@@ -65,10 +65,6 @@ def reset_all(num_groups=5, four_person_groups=None):
             "correct": 104.5
         },
         {
-            "question": "日本にある活火山の個数は？",
-            "correct": 111
-        },
-        {
             "question": "犬の染色体の本数は？",
             "correct": 78
         },
@@ -79,10 +75,6 @@ def reset_all(num_groups=5, four_person_groups=None):
         {
             "question": "この赤色の波長は何nm？",
             "correct": 610
-        },
-        {
-            "question": "2025年度に日本に起こった 震度4以上の地震の回数は？",
-            "correct": 112
         },
         {
             "question": "最新コンピュータは英数字記号7桁のパスワードの突破に何日かかる？",
